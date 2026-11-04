@@ -1,0 +1,14 @@
+{
+  "appId": "com.joriaps.hogarquest",
+  "appName": "HogarQuest",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#1b1340",
+    "adjustMarginsForEdgeToEdge": "auto",
+    "webContentsDebuggingEnabled": false
+  },
+  "ios": {
+    "backgroundColor": "#1b1340",
+    "contentInset": "never"
+  }
+}

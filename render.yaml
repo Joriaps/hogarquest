@@ -1,0 +1,35 @@
+# Blueprint de Render: crea los dos servicios gratuitos de HogarQuest de una vez.
+# En Render: New → Blueprint → elige este repositorio.
+services:
+  # Servidor de sincronización (guarda las familias en un repo privado de GitHub)
+  - type: web
+    name: hogarquest-sync
+    runtime: node
+    plan: free
+    buildCommand: node --version
+    startCommand: node server/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: GITHUB_TOKEN
+        sync: false # se pide al crear el Blueprint (token con permiso de escritura en el repo de datos)
+      - key: GITHUB_REPO
+        sync: false # p. ej. tuusuario/hogarquest-datos
+      - key: GITHUB_BRANCH
+        value: main
+
+  # La app web (para instalar en iPhone desde Safari y usar en cualquier navegador)
+  - type: web
+    name: hogarquest
+    runtime: static
+    # --include=dev: Vite es dependencia de desarrollo y hace falta aunque NODE_ENV sea production
+    buildCommand: npm ci --include=dev && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # Dirección pública del servidor de arriba. Si Render le da otra (lo ves en su panel),
+      # cámbiala aquí y súbelo: un cambio solo en su panel lo pisaría la siguiente sincronización.
+      - key: VITE_SYNC_URL
+        value: https://hogarquest-sync.onrender.com
+    headers:
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache

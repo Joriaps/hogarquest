@@ -1,0 +1,27 @@
+{
+  "name": "hogarquest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "android": "vite build && npx cap sync android",
+    "ios": "vite build && npx cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "7.6.10",
+    "@capacitor/app": "^7.1.2",
+    "@capacitor/core": "7.6.10",
+    "@capacitor/haptics": "^7.0.0",
+    "@capacitor/ios": "7.6.10",
+    "@capacitor/preferences": "^7.0.0",
+    "@fontsource-variable/fredoka": "^5.3.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "7.6.10",
+    "vite": "6.4.5"
+  }
+}

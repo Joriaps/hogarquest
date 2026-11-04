@@ -1,0 +1,257 @@
+/* game-fx.css - styles for game-fx.js. Idle loops animate transform/opacity only. */
+
+/* ---- completeCard ---- */
+.gfx-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: linear-gradient(120deg, #3ee6a8, #0ead69);
+  pointer-events: none;
+  will-change: opacity;
+}
+.gfx-check { display: block; width: 46px; height: 46px; will-change: transform, opacity; }
+.gfx-check svg { display: block; width: 100%; height: 100%; }
+
+/* ---- flyStars ---- */
+.gfx-star {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 310;
+  font: 400 28px/1 "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ---- bigText ---- */
+.gfx-big {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 0 16px;
+  pointer-events: none;
+  text-align: center;
+  color: var(--gfx-c, #ffd23f);
+}
+.gfx-big-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150vmin;
+  height: 150vmin;
+  margin: -75vmin 0 0 -75vmin;
+  background: radial-gradient(closest-side, rgba(11, 7, 32, .78), rgba(11, 7, 32, .5) 45%, transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.gfx-big-inner { position: relative; max-width: 100%; will-change: transform, opacity; }
+.gfx-big-title {
+  font-weight: 700;
+  font-size: clamp(44px, 15vw, 84px);
+  line-height: 1.04;
+  letter-spacing: .01em;
+  color: var(--gfx-c, #ffd23f);
+  -webkit-text-stroke: 7px #2a1658;
+  paint-order: stroke fill;
+  text-shadow: 0 5px 0 #140a35;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  will-change: transform, opacity;
+}
+.gfx-big-title.gfx-long { font-size: clamp(32px, 10vw, 58px); -webkit-text-stroke-width: 6px; }
+.gfx-big-sub {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: clamp(18px, 5.4vw, 28px);
+  line-height: 1.2;
+  color: #fff;
+  -webkit-text-stroke: 4px #2a1658;
+  paint-order: stroke fill;
+  text-wrap: balance;
+  will-change: transform, opacity;
+}
+
+/* ---- Fortune wheel ---- */
+.gw {
+  position: relative;
+  width: min(280px, 80vw);
+  height: min(280px, 80vw);
+  margin: 12px auto 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.gw, .gw * { pointer-events: none; }
+.gw-rim, .gw-bulbs, .gw-disc, .gw-shade { position: absolute; border-radius: 50%; }
+.gw-rim, .gw-bulbs { inset: 0; }
+.gw-bulbs { display: block; width: 100%; height: 100%; }
+.gw-rim {
+  background: conic-gradient(#ffe88f, #e8a521 12%, #fff0a8 25%, #d8921a 38%, #ffe88f 50%, #e8a521 62%, #fff0a8 75%, #d8921a 88%, #ffe88f);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .5), 0 0 34px rgba(255, 210, 63, .38), inset 0 0 0 2px rgba(255, 255, 255, .55), inset 0 0 0 4px rgba(168, 115, 15, .55);
+}
+.gw-lit { will-change: opacity; }
+.gw-lit-a { animation: gw-blink 1s steps(1) infinite; }
+.gw-lit-b { animation: gw-blink 1s steps(1) .5s infinite; }
+.gw.is-spinning .gw-lit-a { animation-duration: .24s; }
+.gw.is-spinning .gw-lit-b { animation-duration: .24s; animation-delay: .12s; }
+.gw.has-winner .gw-lit-a, .gw.has-winner .gw-lit-b { animation-duration: .3s; }
+.gw.has-winner .gw-lit-b { animation-delay: .15s; }
+@keyframes gw-blink { 0% { opacity: 1; } 50% { opacity: .08; } }
+
+.gw-disc, .gw-shade { inset: 7%; }
+.gw-disc { overflow: hidden; }
+.gw.is-spinning .gw-disc { will-change: transform; }
+.gw-face, .gw-win { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.gw-label {
+  fill: #fff;
+  stroke: #2a1658;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
+  font-family: inherit;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.gw-shade {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, .22), transparent 46%),
+    radial-gradient(circle, transparent 62%, rgba(20, 8, 46, .34) 100%);
+  box-shadow: inset 0 0 0 2px rgba(58, 26, 8, .55), inset 0 4px 12px rgba(20, 8, 46, .55);
+}
+.gw-hub {
+  position: absolute;
+  inset: 39%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #fff3b0, #ffc933 48%, #cf8a14);
+  box-shadow: 0 3px 8px rgba(20, 8, 46, .6), inset 0 0 0 2px rgba(255, 255, 255, .7), inset 0 -3px 5px rgba(150, 90, 10, .55);
+}
+.gw-hub svg { display: block; width: 66%; height: 66%; }
+.gw-pointer {
+  position: absolute;
+  left: 41.5%;
+  top: -6%;
+  width: 17%;
+  height: 20.4%;
+  transform-origin: 50% 30%;
+}
+.gw-pointer svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.gw-win-dim { opacity: .58; }
+.gw-win-flash { opacity: .05; animation: gw-win-pulse .55s ease-in-out infinite alternate; will-change: opacity; }
+@keyframes gw-win-pulse { from { opacity: .04; } to { opacity: .34; } }
+
+/* ---- Treasure chest ---- */
+.gc {
+  position: relative;
+  width: min(250px, 70vw);
+  height: min(250px, 70vw);
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.gc-rays, .gc-glow, .gc-floor, .gc-spark, .gc-light { pointer-events: none; }
+.gc-box { position: absolute; inset: 0; transform-origin: 50% 88%; animation: gc-wiggle 2.6s ease-in-out infinite; }
+.gc-layer { position: absolute; inset: 0; }
+.gc-layer svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* The hinge is the seam of the 240 unit viewBox: 128/240 = 53.33%. */
+.gc-lid, .gc-lid-in { transform-origin: 50% 53.33%; }
+.gc-lid-in { opacity: 0; transform: perspective(640px) rotateX(26deg); }
+.gc-treasure, .gc-light { opacity: 0; }
+.gc-light {
+  background: radial-gradient(44% 30% at 50% 44%, rgba(255, 240, 170, .95), rgba(255, 210, 63, .5) 55%, transparent);
+}
+.gc-glow {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  width: 118%;
+  height: 118%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 210, 63, .62), rgba(255, 159, 67, .22) 58%, transparent);
+  animation: gc-glow 1.9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.gc-floor {
+  position: absolute;
+  left: 13%;
+  right: 13%;
+  top: 85%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(10, 4, 30, .7), transparent);
+}
+.gc-spark { position: absolute; width: 11%; height: 11%; opacity: 0; animation: gc-twinkle 2.1s ease-in-out infinite; will-change: transform, opacity; }
+.gc-spark svg { display: block; width: 100%; height: 100%; }
+.gc-s1 { left: 6%; top: 16%; }
+.gc-s2 { right: 4%; top: 28%; width: 8%; height: 8%; animation-delay: .7s; }
+.gc-s3 { left: 54%; top: 4%; width: 7%; height: 7%; animation-delay: 1.4s; }
+
+/* Clipped to a circle no wider than the screen, so the spin can't widen the page. */
+.gc-rays {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(172%, 96vw);
+  height: min(172%, 96vw);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(closest-side, #000 28%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 28%, transparent 100%);
+}
+.gc-rays-i {
+  position: absolute;
+  inset: -22%;
+  background: repeating-conic-gradient(rgba(255, 236, 150, .85) 0 11deg, transparent 13deg 28deg, rgba(255, 236, 150, .85) 30deg);
+}
+
+.gc.is-opening .gc-box,
+.gc.is-opening .gc-glow,
+.gc.is-opening .gc-spark,
+.gc.is-open .gc-box,
+.gc.is-open .gc-spark { animation: none; }
+.gc.is-opening .gc-spark { opacity: 0; }
+
+.gc.is-open .gc-lid { visibility: hidden; }
+.gc.is-open .gc-lid-in,
+.gc.is-open .gc-treasure,
+.gc.is-open .gc-light,
+.gc.is-open .gc-rays { opacity: 1; }
+.gc.is-open .gc-rays-i { animation: gc-spin 11s linear infinite; will-change: transform; }
+
+@keyframes gc-wiggle {
+  0%, 62%, 100% { transform: rotate(0deg); }
+  67% { transform: rotate(-3.2deg) scale(1.02, .98); }
+  73% { transform: rotate(3.2deg) scale(1.02, .98); }
+  79% { transform: rotate(-2.4deg); }
+  85% { transform: rotate(1.6deg); }
+  91% { transform: rotate(-.6deg); }
+}
+@keyframes gc-glow {
+  0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(.94); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+}
+@keyframes gc-twinkle {
+  0%, 55%, 100% { opacity: 0; transform: scale(.3) rotate(0deg); }
+  28% { opacity: 1; transform: scale(1) rotate(40deg); }
+}
+@keyframes gc-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .gc-box, .gc-glow, .gc-spark, .gc.is-open .gc-rays-i, .gw-lit-a, .gw-lit-b, .gw-win-flash { animation: none; }
+  .gc-glow { opacity: .8; }
+  .gc-spark { opacity: .8; }
+  .gc.is-opening .gc-spark, .gc.is-open .gc-spark { opacity: 0; }
+  .gw-lit-b { opacity: 0; }
+  .gw-win-flash { opacity: .22; }
+}
